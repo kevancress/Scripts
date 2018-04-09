@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,6 +13,8 @@ public class InventoryUI : MonoBehaviour {
     InventorySlot[] slots;
 
     InventoryManager inventory;
+
+    TimeManager timeManager;
 
 
     #region Singleton
@@ -30,6 +33,7 @@ public class InventoryUI : MonoBehaviour {
     #endregion
     // Use this for initialization
     void Start () {
+        timeManager = TimeManager.instance;
         inventory = InventoryManager.instance;
         inventory.onItemChangedCallback += UpdateUI;
         slots = playerInventoryPanel.GetComponentsInChildren<InventorySlot>();
@@ -40,10 +44,25 @@ public class InventoryUI : MonoBehaviour {
 	void Update () {
         if (Input.GetButtonDown("Inventory"))
         {
-            inventoryContainer.SetActive(!inventoryContainer.activeSelf);
+            OpenInventoryUI();
         }
 		
 	}
+
+    private void OpenInventoryUI()
+    {
+        if (!inventoryContainer.activeSelf)
+        {
+            inventoryContainer.SetActive(true);
+            timeManager.MenuTime();
+        }
+        else if (inventoryContainer.activeSelf)
+        {
+            inventoryContainer.SetActive(false);
+            timeManager.NormalTime();
+        }
+        
+    }
 
     void UpdateUI()
     {
