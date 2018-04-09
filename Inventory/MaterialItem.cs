@@ -10,11 +10,13 @@ public class MaterialItem : InventoryItem{
         if (isInCollider && !isHeld)
         {
             PickUp();
+            interactionManager.possibleActions.Remove(this);
+            interactionManager.UpdateInteractionManager();
 
         }
         else if (isHeld)
         {
-            Drop();
+            interactionManager.Drop();
         }
     }
 
@@ -33,27 +35,15 @@ public class MaterialItem : InventoryItem{
             isHeld = true;
             action = "Drop Item";
             lable = "";
-            interactionManager.UpdateInteractionManager(this);
-            
+            interactionManager.possibleActions.Add(this);
+            interactionManager.UpdateInteractionManager();
+
+
 
         }
         else
         {
             Debug.Log("no holder");
         }
-    }
-
-    public void Drop()
-    {
-        gameObject.transform.SetParent(null);
-        Rigidbody rb = gameObject.GetComponent<Rigidbody>();
-        if (rb == null)
-        {
-            gameObject.AddComponent<Rigidbody>();
-            rb = gameObject.GetComponent<Rigidbody>();
-        }
-        rb.isKinematic = false;
-        isHeld = false;
-        action = item.action;
     }
 }

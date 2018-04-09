@@ -48,20 +48,23 @@ public class InteractionButtonUI : MonoBehaviour {
 
     private void UpdateInteractionButtonUI()
     {
-        obj = interactionManager.obj;
-        key.text = obj.key;
-        action.text = obj.action;
-        if (action.text != "" && key.text != "")
+        int count = interactionManager.possibleActions.Count;
+        if (count >= 1)
         {
-            action.enabled = true;
-            actionButton.SetActive(true);
+            obj = interactionManager.possibleActions[count-1];
+            if (obj != null)
+            {
+                key.text = obj.key;
+                action.text = obj.action;
+                action.enabled = true;
+                actionButton.SetActive(true);
+            }
         }
 
-        else
+        else if ( count < 1)
         {
             action.enabled = false;
             actionButton.SetActive(false);
         }
-        
     }
 }

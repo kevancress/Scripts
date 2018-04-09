@@ -106,5 +106,6 @@ public class InventoryUI : MonoBehaviour {
         }
 
         optionsPanel.SetActive(!optionsPanel.activeSelf);
+        Debug.Log("togeling options panel");
     }
 }

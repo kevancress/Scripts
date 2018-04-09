@@ -21,7 +21,9 @@ public class InventoryItem : InteractableObject {
         {
             base.OnInteraction();
 
-            PickUp();           
+            PickUp();
+            interactionManager.possibleActions.Remove(this);
+            interactionManager.UpdateInteractionManager();
         }
     }
 

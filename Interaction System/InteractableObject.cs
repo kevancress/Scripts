@@ -60,6 +60,8 @@ public class InteractableObject : MonoBehaviour {
         interactionManager.NotNearIntObj();
         Debug.Log(action + lable);
         isInCollider = false;
+        interactionManager.possibleActions.Remove(gameObject.GetComponent<InteractableObject>());
+        interactionManager.UpdateInteractionManager();
     }
     /*
    

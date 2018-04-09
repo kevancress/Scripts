@@ -9,7 +9,7 @@ public class PlayerInteraction : MonoBehaviour {
     InteractionManager interactionManager;
     InteractableObject currentObjInView;
     InteractableObject lastObjInView;
-
+    
 
 
     void Start()
@@ -25,9 +25,27 @@ public class PlayerInteraction : MonoBehaviour {
         {
             lastObjInView = currentObjInView;
             currentObjInView = IsLookingAt();
-            if (currentObjInView != lastObjInView && currentObjInView !=null)
+            if (currentObjInView != lastObjInView && currentObjInView !=null )
             {
-                interactionManager.UpdateInteractionManager(currentObjInView);
+                if (!interactionManager.possibleActions.Contains(currentObjInView))
+                {
+                    interactionManager.possibleActions.Add(currentObjInView);
+                    interactionManager.UpdateInteractionManager();
+                }
+                else if (interactionManager.possibleActions.Contains(currentObjInView))
+                {
+                    int index = interactionManager.possibleActions.IndexOf(currentObjInView);
+                    int finalIndex = interactionManager.possibleActions.Count - 1;
+                    if (index != finalIndex)
+                    {
+                        interactionManager.possibleActions.Remove(currentObjInView);
+                        interactionManager.possibleActions.Add(currentObjInView);
+                        interactionManager.UpdateInteractionManager();
+                    }
+                  
+
+                    
+                }
             }
 
             

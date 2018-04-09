@@ -6,6 +6,7 @@ using UnityEngine;
 public class InteractionManager : MonoBehaviour {
     public InteractableObject obj;
     public List<InteractableObject> possibleActions = new List<InteractableObject>();
+    int count;
 
     public delegate void NearInteractableObject();
     public NearInteractableObject onNearIntObjCallback;
@@ -30,8 +31,6 @@ public class InteractionManager : MonoBehaviour {
         }
         instance = this;
     }
-
-   
     #endregion
 
     public void NearIntObj()
@@ -55,9 +54,8 @@ public class InteractionManager : MonoBehaviour {
         }
     }
 
-    internal void UpdateInteractionManager(InteractableObject newobj)
+    internal void UpdateInteractionManager()
     {
-        obj = newobj;
         if (onUpdateInteractionUICallback != null)
         {
             onUpdateInteractionUICallback.Invoke(); 
@@ -65,5 +63,36 @@ public class InteractionManager : MonoBehaviour {
 
         //Debug.Log("UI updated" + lable + action);
        
+    }
+
+    public void Drop()
+    {
+
+        int count = possibleActions.Count;
+        int i = 0;
+        while (i < count)
+        {
+            if (possibleActions[i].GetComponent<MaterialItem>() != null && possibleActions[i].GetComponent<MaterialItem>().isHeld)
+            {
+                Rigidbody rb = possibleActions[i].gameObject.GetComponent<Rigidbody>();
+                if (rb == null)
+                {
+                    possibleActions[i].gameObject.AddComponent<Rigidbody>();
+                    rb = possibleActions[i].gameObject.GetComponent<Rigidbody>();
+                }
+                rb.isKinematic = false;
+                possibleActions[i].gameObject.GetComponent<MaterialItem>().isHeld = false;
+                possibleActions[i].gameObject.GetComponent<MaterialItem>().action = possibleActions[i].obj.action;
+                possibleActions[i].gameObject.GetComponent<MaterialItem>().lable = possibleActions[i].obj.lable;
+                possibleActions[i].gameObject.transform.SetParent(null);
+                possibleActions.Remove(possibleActions[i]);
+            }
+            else
+            {
+                i++;
+            }
+        }
+        UpdateInteractionManager();
+
     }
 }

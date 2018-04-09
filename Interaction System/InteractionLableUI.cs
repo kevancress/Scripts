@@ -28,13 +28,27 @@ public class InteractionLableUI : MonoBehaviour {
 
     private void UpdateInteractionLableUI()
     {
-        obj = interactionManager.obj;
-        lable.text = obj.lable;
-        lableObject = interactionManager.obj.GetComponentInParent<Collider>();
-        if (lable.text != "")
+        int count= interactionManager.possibleActions.Count;
+        if (count >= 1)
         {
-            lablePanel.SetActive(true);
+            obj = interactionManager.possibleActions[count-1];
+            if (obj != null)
+            {
+                lable.text = obj.lable;
+                lableObject = obj.GetComponentInParent<Collider>();
+                if (lable.text != "")
+                {
+                    lablePanel.SetActive(true);
+                }
+ 
+            }
         }
+
+        else
+        {
+            lablePanel.SetActive(false);
+        }
+
        
 
 
