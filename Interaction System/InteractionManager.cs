@@ -65,7 +65,14 @@ public class InteractionManager : MonoBehaviour {
        
     }
 
-    public void Drop()
+    internal void RemoveFromPossibleActions(InteractableObject obj)
+    {
+        possibleActions.Remove(obj);
+        UpdateInteractionManager();
+    }
+
+
+    internal void Drop()
     {
 
         int count = possibleActions.Count;
@@ -81,18 +88,22 @@ public class InteractionManager : MonoBehaviour {
                     rb = possibleActions[i].gameObject.GetComponent<Rigidbody>();
                 }
                 rb.isKinematic = false;
-                possibleActions[i].gameObject.GetComponent<MaterialItem>().isHeld = false;
-                possibleActions[i].gameObject.GetComponent<MaterialItem>().action = possibleActions[i].obj.action;
-                possibleActions[i].gameObject.GetComponent<MaterialItem>().lable = possibleActions[i].obj.lable;
-                possibleActions[i].gameObject.transform.SetParent(null);
-                possibleActions.Remove(possibleActions[i]);
+
+                if (i < count)
+                {
+                    possibleActions[i].gameObject.GetComponent<MaterialItem>().isHeld = false;
+                    possibleActions[i].gameObject.GetComponent<MaterialItem>().action = possibleActions[i].obj.action;
+                    possibleActions[i].gameObject.GetComponent<MaterialItem>().lable = possibleActions[i].obj.lable;
+                    possibleActions[i].gameObject.transform.SetParent(null);
+                    possibleActions.Remove(possibleActions[i]);
+                    count = possibleActions.Count;
+                }
+                UpdateInteractionManager();
             }
             else
             {
                 i++;
             }
         }
-        UpdateInteractionManager();
-
     }
 }

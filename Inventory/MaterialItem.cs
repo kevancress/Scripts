@@ -27,7 +27,7 @@ public class MaterialItem : InventoryItem{
             Rigidbody rb = gameObject.GetComponent<Rigidbody>();
             if (rb != null)
             {
-                rb.isKinematic = true;
+                Destroy(rb);
             }
             gameObject.SetActive(true);
             gameObject.transform.position = item.holdPosition.transform.position;
@@ -37,7 +37,6 @@ public class MaterialItem : InventoryItem{
             lable = "";
             interactionManager.possibleActions.Add(this);
             interactionManager.UpdateInteractionManager();
-
 
 
         }
