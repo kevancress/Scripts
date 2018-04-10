@@ -16,7 +16,7 @@ public class Ability : ScriptableObject {
         Debug.Log("ability hold use");
     }
 
-    internal void EndHold()
+    public virtual void EndHold()
     {
         Debug.Log("end hold");
     }
