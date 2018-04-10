@@ -54,8 +54,8 @@ public class InteractionButtonUI : MonoBehaviour {
             obj = interactionManager.possibleActions[count-1];
             if (obj != null)
             {
-                key.text = obj.key;
-                action.text = obj.action;
+                key.text = obj.obj.key;
+                action.text = obj.obj.action;
                 action.enabled = true;
                 actionButton.SetActive(true);
             }

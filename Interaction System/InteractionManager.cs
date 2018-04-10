@@ -19,6 +19,7 @@ public class InteractionManager : MonoBehaviour {
 
     public delegate void UpdateInteractionUI();
     public UpdateInteractionUI onUpdateInteractionUICallback;
+
     #region Singleton
     public static InteractionManager instance;
 
@@ -92,8 +93,8 @@ public class InteractionManager : MonoBehaviour {
                 if (i < count)
                 {
                     possibleActions[i].gameObject.GetComponent<MaterialItem>().isHeld = false;
-                    possibleActions[i].gameObject.GetComponent<MaterialItem>().action = possibleActions[i].obj.action;
-                    possibleActions[i].gameObject.GetComponent<MaterialItem>().lable = possibleActions[i].obj.lable;
+                    possibleActions[i].gameObject.GetComponent<MaterialItem>().item.action = possibleActions[i].obj.action;
+                    possibleActions[i].gameObject.GetComponent<MaterialItem>().item.lable = possibleActions[i].obj.lable;
                     possibleActions[i].gameObject.transform.SetParent(null);
                     possibleActions.Remove(possibleActions[i]);
                     count = possibleActions.Count;

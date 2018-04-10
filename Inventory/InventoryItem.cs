@@ -29,7 +29,7 @@ public class InventoryItem : InteractableObject {
 
     internal void PickUp()
     {
-        Debug.Log("pickup" + lable + "by " + player.name);
+        Debug.Log("pickup" + item.lable + "by " + player.name);
         item.player = player;
         PlayerInteraction playerscript = player.GetComponent<PlayerInteraction>();
         item.holdPosition = playerscript.holdPosition;

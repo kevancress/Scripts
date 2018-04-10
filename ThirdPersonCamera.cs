@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class ThirdPersonCamera : MonoBehaviour {
 
@@ -17,14 +18,28 @@ public class ThirdPersonCamera : MonoBehaviour {
 	float pitch;
     public Vector3 offset;
 
-    void Start() {
-		if (lockCursor) {
-			Cursor.lockState = CursorLockMode.Locked;
-			Cursor.visible = false;
-		}
+    void Start()
+    {
+        ToggleCursor(lockCursor);
+
 	}
 
-	void LateUpdate () {
+    public void ToggleCursor(bool lockCursor)
+    {
+        if (lockCursor)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+        else if (!lockCursor)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+
+    }
+
+    void LateUpdate () {
 		yaw += Input.GetAxis ("Mouse X") * mouseSensitivity;
 		pitch -= Input.GetAxis ("Mouse Y") * mouseSensitivity;
 		pitch = Mathf.Clamp (pitch, pitchMinMax.x, pitchMinMax.y);

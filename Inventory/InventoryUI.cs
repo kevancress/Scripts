@@ -8,6 +8,7 @@ public class InventoryUI : MonoBehaviour {
     public Transform playerInventoryPanel;
     public GameObject inventoryContainer;
     public GameObject optionsPanel;
+    public Camera mCamera;
     InventorySlot selectedslot;
 
     InventorySlot[] slots;
@@ -15,7 +16,7 @@ public class InventoryUI : MonoBehaviour {
     InventoryManager inventory;
 
     TimeManager timeManager;
-
+    ThirdPersonCamera cameraControl;
 
     #region Singleton
     public static InventoryUI instance;
@@ -38,7 +39,8 @@ public class InventoryUI : MonoBehaviour {
         inventory.onItemChangedCallback += UpdateUI;
         slots = playerInventoryPanel.GetComponentsInChildren<InventorySlot>();
         optionsPanel.SetActive(false);
-	}
+        cameraControl = mCamera.GetComponent<ThirdPersonCamera>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -55,11 +57,13 @@ public class InventoryUI : MonoBehaviour {
         {
             inventoryContainer.SetActive(true);
             timeManager.MenuTime();
+            cameraControl.ToggleCursor(false);
         }
         else if (inventoryContainer.activeSelf)
         {
             inventoryContainer.SetActive(false);
             timeManager.NormalTime();
+            cameraControl.ToggleCursor(true);
         }
         
     }

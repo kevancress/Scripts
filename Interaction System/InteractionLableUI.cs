@@ -34,7 +34,7 @@ public class InteractionLableUI : MonoBehaviour {
             obj = interactionManager.possibleActions[count-1];
             if (obj != null)
             {
-                lable.text = obj.lable;
+                lable.text = obj.obj.lable;
                 lableObject = obj.GetComponentInParent<Collider>();
                 if (lable.text != "")
                 {
