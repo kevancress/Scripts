@@ -16,14 +16,13 @@ public class RootMotionPlayerMovement : MonoBehaviour {
 	Animator playerAnimator;
 	Transform cameraT;
 	CharacterController controller;
-	// Use this for initialization
+
 	void Start () {
 		playerAnimator = GetComponent<Animator> ();
 		cameraT = Camera.main.transform;
 		controller = GetComponent<CharacterController> ();
 	}
 	
-	// Update is called once per frame
 	void Update () {
 
 		Vector2 axisinput = new Vector2 (Input.GetAxis ("Horizontal"), Input.GetAxis ("Vertical"));
@@ -35,7 +34,7 @@ public class RootMotionPlayerMovement : MonoBehaviour {
 		}
 
 
-		bool running = Input.GetKey (KeyCode.LeftShift);
+		bool running = Input.GetButton("Run");
 
 		if (running) {
 			newAnimationSpeed = 1;
