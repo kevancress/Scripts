@@ -15,8 +15,9 @@ public class ThirdPersonCamera : MonoBehaviour {
 
 	float yaw;
 	float pitch;
+    public Vector3 offset;
 
-	void Start() {
+    void Start() {
 		if (lockCursor) {
 			Cursor.lockState = CursorLockMode.Locked;
 			Cursor.visible = false;
@@ -31,7 +32,7 @@ public class ThirdPersonCamera : MonoBehaviour {
 		currentRotation = Vector3.SmoothDamp (currentRotation, new Vector3 (pitch, yaw), ref rotationSmoothVelocity, rotationSmoothTime);
 		transform.eulerAngles = currentRotation;
 
-		transform.position = target.position - transform.forward * dstFromTarget;
+		transform.position = target.position + transform.forward*offset.z + transform.up*offset.y + transform.right*offset.x;
 
 	}
 

@@ -33,8 +33,8 @@ public class MaterialItem : InventoryItem{
             gameObject.transform.position = item.holdPosition.transform.position;
             gameObject.transform.SetParent(item.holdPosition.transform);
             isHeld = true;
-            action = "Drop Item";
-            lable = "";
+            item.action = "Drop Item";
+            item.lable = "";
             interactionManager.possibleActions.Add(this);
             interactionManager.UpdateInteractionManager();
 

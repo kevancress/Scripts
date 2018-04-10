@@ -24,16 +24,18 @@ public class RootMotionPlayerMovement : MonoBehaviour {
 	}
 	
 	void Update () {
-
+        // get input info
 		Vector2 axisinput = new Vector2 (Input.GetAxis ("Horizontal"), Input.GetAxis ("Vertical"));
 		Vector2 inputDir = axisinput.normalized;
 
+
+        //set character rotation
 		if (inputDir != Vector2.zero) {
 			float targetRotation = Mathf.Atan2 (inputDir.x, inputDir.y) * Mathf.Rad2Deg + cameraT.eulerAngles.y;
 			transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref turnSmoothVelocity, turnSmoothTime);
 		}
 
-
+        //check if the character should be running
 		bool running = Input.GetButton("Run");
 
 		if (running) {
@@ -43,10 +45,15 @@ public class RootMotionPlayerMovement : MonoBehaviour {
 			newAnimationSpeed = 0;
 		}
 
-
-		animationSpeed = Mathf.Lerp (animationSpeed, newAnimationSpeed, Time.deltaTime * animationSmooth);
+        // set animation speed
+        animationSpeed = Mathf.Lerp (animationSpeed, newAnimationSpeed, Time.deltaTime * animationSmooth);
 		Vector3 charVelocity = controller.velocity;
 
+        //set animatior values 
+        playerAnimator.SetFloat("forward", inputDir.magnitude);
+        playerAnimator.SetFloat("speedPercent", animationSpeed);
+
+        /*  old jump code
 		if (Input.GetButtonDown ("Jump") && running) {
 			playerAnimator.SetBool ("runJump", true);
 			playerAnimator.SetBool ("jump", false);
@@ -59,9 +66,11 @@ public class RootMotionPlayerMovement : MonoBehaviour {
 		playerAnimator.SetBool ("runJump", false);
 		playerAnimator.SetBool ("jump", false);
 		}
+        */
 
-		playerAnimator.SetFloat ("forward", inputDir.magnitude);
+
+        playerAnimator.SetFloat ("forward", inputDir.magnitude);
 		playerAnimator.SetFloat ("speedPercent", animationSpeed);
-
+        
 	}
 }

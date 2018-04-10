@@ -7,9 +7,9 @@ public class InteractableObject : MonoBehaviour {
 
     public ObjectData obj;
     internal InteractionManager interactionManager;
-    internal string action;
-    internal string lable;
-    internal string key;
+    //internal string action;
+    //internal string lable;
+    //internal string key;
     public GameObject InteractionArea;
     internal GameObject player;
     internal bool hasInteracted;
@@ -18,9 +18,9 @@ public class InteractableObject : MonoBehaviour {
 
     public virtual void Start()
     {
-        action = obj.action;
-        lable = obj.lable;
-        key = obj.key;
+        //action = obj.action;
+        //lable = obj.lable;
+        //key = obj.key;
 
         interactionManager = InteractionManager.instance;
 
@@ -49,7 +49,7 @@ public class InteractableObject : MonoBehaviour {
         if (other.CompareTag("Player"))
         {
             interactionManager.NearIntObj();
-            Debug.Log(action + lable);
+            Debug.Log(obj.action + obj.lable);
             isInCollider = true;
             player = other.gameObject;
         }
@@ -58,7 +58,7 @@ public class InteractableObject : MonoBehaviour {
     public void OnTriggerExit()
     {
         interactionManager.NotNearIntObj();
-        Debug.Log(action + lable);
+        Debug.Log(obj.action + obj.lable);
         isInCollider = false;
         interactionManager.RemoveFromPossibleActions(gameObject.GetComponent<InteractableObject>());
     }
